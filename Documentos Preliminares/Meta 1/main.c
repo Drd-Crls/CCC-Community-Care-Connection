@@ -8,13 +8,16 @@
 #define MAX_USUARIOS 100
 #define MAX_NOME 50
 #define MAX_SENHA 20
-#define MAX_ITENS 6
+#define MAX_ITENS_ALIMENTOS 6
+#define MAX_ITENS_ROUPAS 5
 
 typedef struct {
     char nome[MAX_NOME];
     char cidade_bairro[MAX_NOME];
     char responsavel[MAX_NOME];
     char senha[MAX_SENHA];
+    int doacoes_roupas[MAX_ITENS_ROUPAS];
+    int doacoes_alimentos[MAX_ITENS_ALIMENTOS];
 } Instituicao;
 
 typedef struct {
@@ -28,6 +31,15 @@ typedef struct {
     int quantidade;
 } Item;
 
+Instituicao instituicoes[MAX_INSTITUICOES];
+Usuario usuarios[MAX_USUARIOS];
+Item roupas[MAX_ITENS_ROUPAS] = {{"Camiseta", 0}, {"Calça", 0}, {"Sapato", 0}, {"Blusa", 0}, {"Cobertor", 0}};
+Item alimentos[MAX_ITENS_ALIMENTOS] = {{"Arroz", 0}, {"Feijão", 0}, {"Macarrão", 0}, {"Café", 0}, {"Sal", 0}, {"Açúcar", 0}};
+
+int num_instituicoes = 0;
+int num_usuarios = 0;
+int instituicao_logada = -1; // -1 indica que nenhuma instituição está logada
+
 void carregarDados();
 void salvarDados();
 void telaPrincipal();
@@ -39,15 +51,6 @@ void listarInstituicoes();
 void menuPrincipal();
 void menuLoginInstituicao();
 void menuLoginUsuario();
-
-Instituicao instituicoes[MAX_INSTITUICOES];
-Usuario usuarios[MAX_USUARIOS];
-Item roupas[MAX_ITENS] = {{"Camiseta", 0}, {"Calça", 0}, {"Sapato", 0}, {"Blusa", 0}, {"Cobertor", 0}};
-Item alimentos[MAX_ITENS] = {{"Arroz", 0}, {"Feijão", 0}, {"Macarrão", 0}, {"Café", 0}, {"Sal", 0}, {"Açúcar", 0}};
-
-int num_instituicoes = 0;
-int num_usuarios = 0;
-int instituicao_logada = -1; // -1 indica que nenhuma instituição está logada
 
 // Função para validar o CPF
 int validarCPF(const char *cpf) {
@@ -83,7 +86,6 @@ int validarCPF(const char *cpf) {
     return 1;
 }
 
-// Função para carregar dados dos arquivos
 void carregarDados() {
     FILE *file;
 
@@ -95,6 +97,13 @@ void carregarDados() {
                       instituicoes[num_instituicoes].cidade_bairro,
                       instituicoes[num_instituicoes].responsavel,
                       instituicoes[num_instituicoes].senha) != EOF) {
+            // Inicializa as doações de roupas e alimentos
+            for (int i = 0; i < MAX_ITENS_ROUPAS; i++) {
+                instituicoes[num_instituicoes].doacoes_roupas[i] = 0;
+            }
+            for (int i = 0; i < MAX_ITENS_ALIMENTOS; i++) {
+                instituicoes[num_instituicoes].doacoes_alimentos[i] = 0;
+            }
             num_instituicoes++;
         }
         fclose(file);
@@ -115,7 +124,7 @@ void carregarDados() {
     // Carregar Itens
     file = fopen("roupas.txt", "r");
     if (file) {
-        for (int i = 0; i < MAX_ITENS; i++) {
+        for (int i = 0; i < MAX_ITENS_ROUPAS; i++) {
             fscanf(file, "%49[^\n]\n%d\n", roupas[i].nome, &roupas[i].quantidade);
         }
         fclose(file);
@@ -123,14 +132,13 @@ void carregarDados() {
 
     file = fopen("alimentos.txt", "r");
     if (file) {
-        for (int i = 0; i < MAX_ITENS; i++) {
+        for (int i = 0; i < MAX_ITENS_ALIMENTOS; i++) {
             fscanf(file, "%49[^\n]\n%d\n", alimentos[i].nome, &alimentos[i].quantidade);
         }
         fclose(file);
     }
 }
 
-// Função para salvar dados nos arquivos
 void salvarDados() {
     FILE *file;
 
@@ -162,7 +170,7 @@ void salvarDados() {
     // Salvar Itens
     file = fopen("roupas.txt", "w");
     if (file) {
-        for (int i = 0; i < MAX_ITENS; i++) {
+        for (int i = 0; i < MAX_ITENS_ROUPAS; i++) {
             fprintf(file, "%s\n%d\n", roupas[i].nome, roupas[i].quantidade);
         }
         fclose(file);
@@ -170,14 +178,13 @@ void salvarDados() {
 
     file = fopen("alimentos.txt", "w");
     if (file) {
-        for (int i = 0; i < MAX_ITENS; i++) {
+        for (int i = 0; i < MAX_ITENS_ALIMENTOS; i++) {
             fprintf(file, "%s\n%d\n", alimentos[i].nome, alimentos[i].quantidade);
         }
         fclose(file);
     }
 }
 
-// Função principal da tela inicial
 void telaPrincipal() {
     int escolha;
 
@@ -189,11 +196,10 @@ void telaPrincipal() {
         printf("Escolha uma opção: ");
         fflush(stdout);
         scanf("%d", &escolha);
-        getchar(); // Limpa o buffer do stdin
 
         switch (escolha) {
             case 1:
-                system("cls"); // Limpa a tela
+                system("cls");
                 cadastro();
                 break;
             case 2:
@@ -203,7 +209,7 @@ void telaPrincipal() {
             case 3:
                 printf("Saindo...\n");
                 fflush(stdout);
-                salvarDados(); // Salva os dados antes de sair
+                salvarDados();
                 break;
             default:
                 printf("Opção inválida!\n");
@@ -342,8 +348,23 @@ void login() {
     }
 }
 
-// Função para realizar doações de roupas ou alimentos
 void doar() {
+    if (instituicao_logada == -1) {
+        int escolha_instituicao;
+        listarInstituicoes();
+        printf("Escolha a instituição para a doação (número): ");
+        fflush(stdout);
+        scanf("%d", &escolha_instituicao);
+        getchar();
+
+        if (escolha_instituicao < 1 || escolha_instituicao > num_instituicoes) {
+            printf("Instituição inválida!\n");
+            return;
+        }
+
+        instituicao_logada = escolha_instituicao - 1; // Ajusta para índice base 0
+    }
+
     int tipo;
     printf("\n=== Doar ===\n");
     printf("1. Roupas\n");
@@ -351,31 +372,46 @@ void doar() {
     printf("Escolha uma opção: ");
     fflush(stdout);
     scanf("%d", &tipo);
-    getchar(); // Limpa o buffer do stdin
-
-    if (tipo == 1) { // Doar roupas
-        for (int i = 0; i < MAX_ITENS; i++) {
+    getchar();
+    
+    if (tipo == 1) {
+        printf("\n=== Doação de Roupas ===\n");
+        for (int i = 0; i < MAX_ITENS_ROUPAS; i++) {
+            int quantidade;
             printf("Quantidade de %s: ", roupas[i].nome);
             fflush(stdout);
-            scanf("%d", &roupas[i].quantidade);
-            system("cls");
+            scanf("%d", &quantidade);
+            getchar();
+            if (quantidade > 0) {
+                instituicoes[instituicao_logada].doacoes_roupas[i] += quantidade;
+            }
         }
-    } else if (tipo == 2) { // Doar alimentos
-        for (int i = 0; i < MAX_ITENS; i++) {
+    } else if (tipo == 2) {
+        printf("\n=== Doação de Alimentos ===\n");
+        for (int i = 0; i < MAX_ITENS_ALIMENTOS; i++) {
+            int quantidade;
             printf("Quantidade de %s: ", alimentos[i].nome);
             fflush(stdout);
-            scanf("%d", &alimentos[i].quantidade);
-            system("cls");
+            scanf("%d", &quantidade);
+            getchar();
+            if (quantidade > 0) {
+                instituicoes[instituicao_logada].doacoes_alimentos[i] += quantidade;
+            }
         }
     } else {
         printf("Tipo de doação inválido!\n");
-        fflush(stdout);
-        system("cls");
     }
+    instituicao_logada = -1; // Reseta a instituição logada após a doação
+    fflush(stdout);
+    system("cls");
 }
 
-// Função para conferir doações de roupas ou alimentos
 void conferirDoacoes() {
+    if (instituicao_logada == -1) {
+        printf("Nenhuma instituição está logada!\n");
+        return;
+    }
+
     int tipo;
     printf("\n=== Conferir Doações ===\n");
     printf("1. Roupas\n");
@@ -383,40 +419,38 @@ void conferirDoacoes() {
     printf("Escolha uma opção: ");
     fflush(stdout);
     scanf("%d", &tipo);
-    getchar(); // Limpa o buffer do stdin
+    getchar();
 
-    if (tipo == 1) { // Conferir doações de roupas
-        printf("\n=== Roupas ===\n");
-        for (int i = 0; i < MAX_ITENS; i++) {
-            printf("%s: %d\n", roupas[i].nome, roupas[i].quantidade);
+    if (tipo == 1) {
+        printf("\n=== Doações de Roupas ===\n");
+        for (int i = 0; i < MAX_ITENS_ROUPAS; i++) {
+            printf("%s: %d\n", roupas[i].nome, instituicoes[instituicao_logada].doacoes_roupas[i]);
         }
-        menuLoginInstituicao();
-    } else if (tipo == 2) { // Conferir doações de alimentos
-        printf("\n=== Alimentos ===\n");
-        for (int i = 0; i < MAX_ITENS; i++) {
-            printf("%s: %d\n", alimentos[i].nome, alimentos[i].quantidade);
+    } else if (tipo == 2) {
+        printf("\n=== Doações de Alimentos ===\n");
+        for (int i = 0; i < MAX_ITENS_ALIMENTOS; i++) {
+            printf("%s: %d\n", alimentos[i].nome, instituicoes[instituicao_logada].doacoes_alimentos[i]);
         }
-        menuLoginInstituicao();
     } else {
         printf("Tipo de doação inválido!\n");
-        fflush(stdout);
-        menuLoginInstituicao();
     }
+
+    fflush(stdout);
+    system("cls"); // Limpa a tela
 }
 
-// Função para listar todas as instituições cadastradas
+
 void listarInstituicoes() {
     printf("\n=== Instituições ===\n");
     for (int i = 0; i < num_instituicoes; i++) {
-        printf("Nome: %s\nCidade/Bairro: %s\nResponsável: %s\n\n",
+        printf("%d. Nome: %s\nCidade/Bairro: %s\nResponsável: %s\n\n",
+               i+1,
                instituicoes[i].nome,
                instituicoes[i].cidade_bairro,
                instituicoes[i].responsavel);
     }
-    menuLoginUsuario(); // Retorna ao menu do usuário
 }
 
-// Função principal do menu para usuários comuns
 void menuPrincipal() {
     int escolha;
 
@@ -429,7 +463,6 @@ void menuPrincipal() {
         printf("Escolha uma opção: ");
         fflush(stdout);
         scanf("%d", &escolha);
-        getchar(); // Limpa o buffer do stdin
 
         switch (escolha) {
             case 1:
@@ -444,7 +477,7 @@ void menuPrincipal() {
             case 4:
                 printf("Saindo...\n");
                 fflush(stdout);
-                salvarDados(); // Salva os dados antes de sair
+                salvarDados();
                 break;
             default:
                 printf("Opção inválida!\n");
@@ -453,7 +486,6 @@ void menuPrincipal() {
     } while (escolha != 4);
 }
 
-// Função principal do menu para instituições
 void menuLoginInstituicao() {
     int escolha;
 
@@ -465,7 +497,6 @@ void menuLoginInstituicao() {
         printf("Escolha uma opção: ");
         fflush(stdout);
         scanf("%d", &escolha);
-        getchar(); // Limpa o buffer do stdin
 
         switch (escolha) {
             case 1:
@@ -477,7 +508,7 @@ void menuLoginInstituicao() {
             case 3:
                 printf("Saindo...\n");
                 fflush(stdout);
-                instituicao_logada = -1; // Logout da instituição
+                instituicao_logada = -1; // Logout
                 break;
             default:
                 printf("Opção inválida!\n");
@@ -486,24 +517,26 @@ void menuLoginInstituicao() {
     } while (escolha != 3);
 }
 
-// Função principal do menu para usuários comuns
 void menuLoginUsuario() {
     int escolha;
 
     do {
         printf("\n=== Menu Usuário Comum ===\n");
         printf("1. Listar Instituições\n");
-        printf("2. Sair\n");
+        printf("2. Doar\n");
+        printf("3. Sair\n");
         printf("Escolha uma opção: ");
         fflush(stdout);
         scanf("%d", &escolha);
-        getchar(); // Limpa o buffer do stdin
 
         switch (escolha) {
             case 1:
                 listarInstituicoes();
                 break;
             case 2:
+                doar();
+                break;
+            case 3:
                 printf("Saindo...\n");
                 fflush(stdout);
                 break;
@@ -511,13 +544,12 @@ void menuLoginUsuario() {
                 printf("Opção inválida!\n");
                 fflush(stdout);
         }
-    } while (escolha != 2);
+    } while (escolha != 3);
 }
 
-// Função principal do programa
 int main() {
-    setlocale(LC_ALL, "Portuguese"); // Configura o locale para português
-    carregarDados(); // Carrega os dados dos arquivos
-    telaPrincipal(); // Exibe a tela principal do programa
+    setlocale(LC_ALL, "Portuguese");
+    carregarDados();
+    telaPrincipal();
     return 0;
 }
