@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?><project name="Untitled Gantt Project" company="" webLink="http://" view-date="2024-07-01" view-index="0" gantt-divider-location="670" resource-divider-location="300" version="3.3.3309" locale="pt_BR">
+    <description/>
+    <view zooming-state="default:11" id="gantt-chart">
+        <field id="tpd2" name="Alertas" width="-1" order="0"/>
+        <field id="tpd3" name="Nome" width="177" order="0"/>
+        <field id="tpd5" name="Data final" width="32" order="1"/>
+        <field id="tpd10" name="ID" width="32" order="2"/>
+        <field id="tpd11" name="Índice" width="32" order="3"/>
+        <field id="tpd4" name="Data inicial" width="178" order="4"/>
+        <field id="tpd15" name="Notas" width="20" order="5"/>
+        <field id="tpd7" name="Concluído" width="31" order="5"/>
+        <field id="tpd8" name="Coordenador" width="20" order="6"/>
+        <field id="tpd12" name="Custo" width="20" order="7"/>
+        <field id="tpd6" name="Duração" width="31" order="8"/>
+        <field id="tpd9" name="Predecessoras" width="27" order="9"/>
+        <field id="tpd1" name="Prioridade" width="43" order="10"/>
+        <field id="tpd0" name="Tipo" width="31" order="11"/>
+        <option id="filter.completedTasks" value="false"/>
+        <option id="filter.dueTodayTasks" value="false"/>
+        <option id="filter.overdueTasks" value="false"/>
+        <option id="filter.inProgressTodayTasks" value="false"/>
+        <option id="color.recent"><![CDATA[#33ff33 #ff0033]]></option>
+    </view>
+    <view id="resource-table">
+        <field id="0" name="Nome" width="210" order="0"/>
+        <field id="1" name="Função" width="86" order="1"/>
+    </view>
+    <!-- -->
+    <calendars>
+        <day-types>
+            <day-type id="0"/>
+            <day-type id="1"/>
+            <default-week id="1" name="default" sun="1" mon="0" tue="0" wed="0" thu="0" fri="0" sat="1"/>
+            <only-show-weekends value="false"/>
+            <overriden-day-types/>
+            <days/>
+        </day-types>
+    </calendars>
+    <tasks empty-milestones="true">
+        <taskproperties>
+            <taskproperty id="tpd0" name="type" type="default" valuetype="icon"/>
+            <taskproperty id="tpd1" name="priority" type="default" valuetype="icon"/>
+            <taskproperty id="tpd2" name="info" type="default" valuetype="icon"/>
+            <taskproperty id="tpd3" name="name" type="default" valuetype="text"/>
+            <taskproperty id="tpd4" name="begindate" type="default" valuetype="date"/>
+            <taskproperty id="tpd5" name="enddate" type="default" valuetype="date"/>
+            <taskproperty id="tpd6" name="duration" type="default" valuetype="int"/>
+            <taskproperty id="tpd7" name="completion" type="default" valuetype="int"/>
+            <taskproperty id="tpd8" name="coordinator" type="default" valuetype="text"/>
+            <taskproperty id="tpd9" name="predecessorsr" type="default" valuetype="text"/>
+        </taskproperties>
+        <task id="2" uid="2b252b8da3b348c58012a496d7121e6a" name="Termo de abertura" color="#8cb6ce" meeting="false" start="2024-02-23" duration="5" complete="0" expand="true">
+            <depend id="4" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="0" uid="088001c82c4343279f723fead230c76d" name="Inicio do projeto" meeting="false" start="2024-02-23" duration="5" complete="0" expand="true">
+            <depend id="2" type="1" difference="0" hardness="Rubber"/>
+        </task>
+        <task id="4" uid="dd4d9b7635e549279657830e0021447a" name="Gerenciamento do Escopo do Projeto" meeting="false" start="2024-03-01" duration="5" complete="0" expand="true">
+            <depend id="5" type="1" difference="0" hardness="Strong"/>
+        </task>
+        <task id="5" uid="e8a934d12fdf4482a58579183360c9cf" name="Identificação, planejamento e conceituação do projeto" color="#8cb6ce" meeting="false" start="2024-03-01" duration="5" complete="0" expand="true">
+            <depend id="6" type="2" difference="0" hardness="Strong"/>
+            <depend id="10" type="2" difference="0" hardness="Rubber"/>
+        </task>
+        <task id="6" uid="aeef5d78839246b7bcfd5cfb06b8e95e" name="Pesquisas" meeting="false" start="2024-03-08" duration="5" complete="0" expand="true">
+            <depend id="7" type="2" difference="0" hardness="Strong"/>
+            <depend id="8" type="2" difference="0" hardness="Strong"/>
+            <depend id="9" type="1" difference="10" hardness="Strong"/>
+        </task>
+        <task id="7" uid="72ae25915acb4d0da8b4c471ddac0e6e" name="Analises de mercado" color="#8cb6ce" meeting="false" start="2024-03-15" duration="5" complete="0" expand="true"/>
+        <task id="8" uid="9b936f7b46094ffc8a548e8e45ccaacf" name="Estudo sobre gestão de projetos" color="#8cb6ce" meeting="false" start="2024-03-15" duration="5" complete="0" expand="true"/>
+        <task id="9" uid="30edaf7243214f4b9920d92c70e94b9f" name="Analise de risco do projeto" meeting="false" start="2024-03-22" duration="5" complete="0" priority="0" expand="true">
+            <depend id="12" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="12" uid="01ff90c26f8a4f69906d2c83c74f39cb" name="Planejamento do cronograma" meeting="false" start="2024-03-29" duration="5" complete="0" expand="true"/>
+        <task id="10" uid="ef1e10188ddc43ddb6b7bc9cf419498e" name="Gerenicamento de Recursos humanos" meeting="false" start="2024-04-05" duration="5" complete="0" expand="true">
+            <depend id="11" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="11" uid="781c132ff3a44c4d890fe1dc4ce14c06" name="Administrando as equipes" color="#8cb6ce" meeting="false" start="2024-04-12" duration="5" complete="0" expand="true"/>
+        <task id="13" uid="185f182436c44827acd110fd237fdfb9" name="Inicio da greve" color="#ff0033" meeting="true" start="2024-04-18" duration="0" complete="0" expand="true">
+            <depend id="14" type="2" difference="0" hardness="Rubber"/>
+        </task>
+        <task id="14" uid="12f4613b6c6340a185401c015dc8d178" name="Desenvolvimento do prototipo" meeting="false" start="2024-06-28" duration="5" complete="0" expand="true">
+            <depend id="16" type="3" difference="0" hardness="Strong"/>
+            <depend id="17" type="3" difference="0" hardness="Strong"/>
+            <depend id="18" type="2" difference="0" hardness="Strong"/>
+            <depend id="19" type="2" difference="0" hardness="Strong"/>
+            <depend id="20" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="16" uid="e3687e180beb40e19816d6be6b3ed092" name="Analise de requisitos" color="#8cb6ce" meeting="false" start="2024-06-28" duration="5" complete="0" expand="true"/>
+        <task id="17" uid="e0527e1be5204496a004e93b27bc33d6" name="Analise de Design" color="#8cb6ce" meeting="false" start="2024-06-28" duration="5" complete="0" expand="true"/>
+        <task id="19" uid="98213f0153b14d608c4545bc1358f02d" name="Desenvolvimento do protótipo funcional" color="#8cb6ce" meeting="false" start="2024-07-05" duration="5" complete="0" expand="true">
+            <depend id="21" type="2" difference="0" hardness="Strong"/>
+            <depend id="22" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="18" uid="e6ebfc6e15684d989576a3b1c3d3edf5" name="Design da Interface do Usuário (UI/UX)" meeting="false" start="2024-07-05" duration="5" complete="0" expand="true"/>
+        <task id="20" uid="9520c03cc6f944ae945de195bbb22151" name="Desenvolvimento de Funcionalidades Básicas" color="#8cb6ce" meeting="false" start="2024-07-05" duration="5" complete="0" expand="true"/>
+        <task id="21" uid="c0adcd433c09461baabdb9f067456eae" name="Periodo de teste do prototipos" meeting="false" start="2024-07-12" duration="5" complete="0" expand="true"/>
+        <task id="22" uid="99f62b670c2b481ab840ca38ead3c566" name="Correção de falhas e bugs do prototipo" color="#8cb6ce" meeting="false" start="2024-07-12" duration="5" complete="0" expand="true"/>
+        <task id="23" uid="2a78b2fd807640c1920af724d702c615" name="Lançamento da versão beta" color="#33ff33" meeting="true" start="2024-07-19" duration="0" complete="0" expand="true">
+            <depend id="24" type="1" difference="0" hardness="Strong"/>
+            <depend id="25" type="1" difference="0" hardness="Strong"/>
+            <depend id="26" type="1" difference="0" hardness="Strong"/>
+        </task>
+        <task id="24" uid="e9a498096f30470e85883c8164d7e097" name="Analise de feedbacks" meeting="false" start="2024-07-19" duration="5" complete="0" expand="true">
+            <depend id="27" type="2" difference="0" hardness="Strong"/>
+            <depend id="28" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="26" uid="016c846720264dbaa97207a5cc902da3" name="Implementação de melhorias com estudo dos feedbacks" color="#8cb6ce" meeting="false" start="2024-07-19" duration="5" complete="0" expand="true"/>
+        <task id="25" uid="e06dba1b82634977b84743117e6f3ed0" name="Otimização do Codigo" color="#8cb6ce" meeting="false" start="2024-07-19" duration="5" complete="0" expand="true"/>
+        <task id="27" uid="6860c4bedac749e2a6e55985a3bfa83e" name="Programa de Suporte ao Usuário" meeting="false" start="2024-07-26" duration="5" complete="0" expand="true">
+            <depend id="34" type="2" difference="0" hardness="Rubber"/>
+        </task>
+        <task id="28" uid="9c3cac7ebf7b48b2bc44bf414d286e11" name="Revisão na documentação do projeto" color="#8cb6ce" meeting="false" start="2024-07-26" duration="5" complete="0" expand="true"/>
+        <task id="31" uid="acfbe7f32ed1412689d435396f822262" name="Análise de Dados de Uso" color="#8cb6ce" meeting="false" start="2024-08-02" duration="5" complete="0" expand="true">
+            <depend id="33" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="29" uid="9cc031592574417b9fa610e0134e84dd" name="Implementação e Manutenção do aplicativo" meeting="false" start="2024-08-02" duration="5" complete="0" expand="true">
+            <depend id="31" type="3" difference="0" hardness="Strong"/>
+        </task>
+        <task id="33" uid="81b991ba81c640d6ae6afc623c15f115" name="Estabelecimento do Canal de Atendimento ao Cliente" color="#8cb6ce" meeting="false" start="2024-08-09" duration="5" complete="0" expand="true"/>
+        <task id="34" uid="500b2076deec451fbc71c577452728ce" name="Treinamento de Usuários" meeting="false" start="2024-08-09" duration="5" complete="0" expand="true"/>
+        <task id="35" uid="86de3bc80a16440fa204214a7739d336" name="Encerramento do Projeto" meeting="true" start="2024-08-16" duration="0" complete="0" expand="true">
+            <depend id="37" type="2" difference="0" hardness="Strong"/>
+            <depend id="38" type="2" difference="0" hardness="Strong"/>
+            <depend id="39" type="2" difference="0" hardness="Strong"/>
+            <depend id="40" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="37" uid="c649db6fe8174909bf2f9843c82ecb22" name="Revisão Final do Projeto" meeting="false" start="2024-08-16" duration="5" complete="0" expand="true"/>
+        <task id="40" uid="814b0e61fc8a4734b37719e6f92ae77d" name="Documentação Final" color="#8cb6ce" meeting="false" start="2024-08-16" duration="5" complete="0" expand="true"/>
+        <task id="39" uid="fc1eac1f332946859c7ebb0fadf4d8a6" name="Relatório de Lições Aprendidas" color="#8cb6ce" meeting="false" start="2024-08-16" duration="5" complete="0" expand="true"/>
+        <task id="38" uid="eed95e7ca8974f3d841154c75330f4bb" name="Entrega Final aos Stakeholders" color="#8cb6ce" meeting="false" start="2024-08-16" duration="5" complete="0" expand="true"/>
+    </tasks>
+    <resources/>
+    <allocations/>
+    <vacations/>
+    <previous>
+        <previous-tasks name="">
+            <previous-task id="2" start="2024-02-23" duration="5" meeting="false" super="false"/>
+            <previous-task id="0" start="2024-02-23" duration="5" meeting="false" super="false"/>
+            <previous-task id="4" start="2024-03-01" duration="5" meeting="false" super="false"/>
+            <previous-task id="5" start="2024-03-01" duration="5" meeting="false" super="false"/>
+            <previous-task id="6" start="2024-03-08" duration="5" meeting="false" super="false"/>
+            <previous-task id="7" start="2024-03-15" duration="5" meeting="false" super="false"/>
+            <previous-task id="8" start="2024-03-15" duration="5" meeting="false" super="false"/>
+        </previous-tasks>
+    </previous>
+    <roles roleset-name="Default"/>
+</project>
