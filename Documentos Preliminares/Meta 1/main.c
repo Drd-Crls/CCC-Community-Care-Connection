@@ -48,7 +48,6 @@ void login();
 void doar();
 void conferirDoacoes();
 void listarInstituicoes();
-void menuPrincipal();
 void menuLoginInstituicao();
 void menuLoginUsuario();
 
@@ -449,41 +448,6 @@ void listarInstituicoes() {
                instituicoes[i].cidade_bairro,
                instituicoes[i].responsavel);
     }
-}
-
-void menuPrincipal() {
-    int escolha;
-
-    do {
-        printf("\n=== Menu Principal ===\n");
-        printf("1. Doar\n");
-        printf("2. Conferir Doações\n");
-        printf("3. Listar Instituições\n");
-        printf("4. Sair\n");
-        printf("Escolha uma opção: ");
-        fflush(stdout);
-        scanf("%d", &escolha);
-
-        switch (escolha) {
-            case 1:
-                doar();
-                break;
-            case 2:
-                conferirDoacoes();
-                break;
-            case 3:
-                listarInstituicoes();
-                break;
-            case 4:
-                printf("Saindo...\n");
-                fflush(stdout);
-                salvarDados();
-                break;
-            default:
-                printf("Opção inválida!\n");
-                fflush(stdout);
-        }
-    } while (escolha != 4);
 }
 
 void menuLoginInstituicao() {
