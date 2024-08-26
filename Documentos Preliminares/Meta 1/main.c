@@ -98,10 +98,11 @@ void carregarDados() {
                       instituicoes[num_instituicoes].senha) != EOF) {
             // Inicializa as doações de roupas e alimentos
             for (int i = 0; i < MAX_ITENS_ROUPAS; i++) {
-                instituicoes[num_instituicoes].doacoes_roupas[i] = 0;
+              fscanf(file, "%d\n", &instituicoes[num_instituicoes].doacoes_roupas[i]);
             }
+            // Carregar doações de alimentos
             for (int i = 0; i < MAX_ITENS_ALIMENTOS; i++) {
-                instituicoes[num_instituicoes].doacoes_alimentos[i] = 0;
+              fscanf(file, "%d\n", &instituicoes[num_instituicoes].doacoes_alimentos[i]);
             }
             num_instituicoes++;
         }
@@ -150,6 +151,15 @@ void salvarDados() {
                     instituicoes[i].cidade_bairro,
                     instituicoes[i].responsavel,
                     instituicoes[i].senha);
+
+            // Salva as doações de roupas
+            for (int j = 0; j < MAX_ITENS_ROUPAS; j++) {
+                fprintf(file, "%d\n", instituicoes[i].doacoes_roupas[j]);
+            }
+            // Salva as doações de alimentos
+            for (int j = 0; j < MAX_ITENS_ALIMENTOS; j++) {
+                fprintf(file, "%d\n", instituicoes[i].doacoes_alimentos[j]);
+            }
         }
         fclose(file);
     }
@@ -234,7 +244,7 @@ void cadastro() {
         fflush(stdout);
         fgets(u.nome, MAX_NOME, stdin);
         u.nome[strcspn(u.nome, "\n")] = 0; // Remove o caractere '\n'
-        
+
         // Entrada e validação do CPF
         do {
             printf("CPF (somente números): ");
@@ -348,6 +358,7 @@ void login() {
 }
 
 void doar() {
+    int verifica;
     if (instituicao_logada == -1) {
         int escolha_instituicao;
         listarInstituicoes();
@@ -360,8 +371,8 @@ void doar() {
             printf("Instituição inválida!\n");
             return;
         }
-
         instituicao_logada = escolha_instituicao - 1; // Ajusta para índice base 0
+        verifica = 1;
     }
 
     int tipo;
@@ -372,7 +383,7 @@ void doar() {
     fflush(stdout);
     scanf("%d", &tipo);
     getchar();
-    
+
     if (tipo == 1) {
         printf("\n=== Doação de Roupas ===\n");
         for (int i = 0; i < MAX_ITENS_ROUPAS; i++) {
@@ -400,7 +411,10 @@ void doar() {
     } else {
         printf("Tipo de doação inválido!\n");
     }
-    instituicao_logada = -1; // Reseta a instituição logada após a doação
+
+    if(verifica == 1){
+        instituicao_logada = -1; // Reseta a instituição logada após a doação
+    }
     fflush(stdout);
     system("cls");
 }
